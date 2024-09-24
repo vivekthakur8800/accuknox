@@ -110,30 +110,29 @@ Signal sent after save.
 
 In this case, if the signal is sent after saving an instance, the receiver runs, but if you were to raise an exception after instance.save(), the signal receiver would not be part of the transaction rollback. This indicates that signals do not run in the same transaction context by default.
 
-Custom Classes in Python
-Now, let’s create the Rectangle class with the specified requirements.
-
-
+rectangle.py
+Simpler Rectangle Class Implementation
+'''
 class Rectangle:
     def __init__(self, length: int, width: int):
-        self.length = length
-        self.width = width
+        self.dimensions = {'length': length, 'width': width}
 
     def __iter__(self):
-        yield {'length': self.length}
-        yield {'width': self.width}
+        return iter(self.dimensions.items())
 
 # Example usage
 rectangle = Rectangle(5, 10)
-for dimension in rectangle:
-    print(dimension)
-
+for dimension, value in rectangle:
+    print({dimension: value})
+'''
 Output:
 
+css
+Copy code
 {'length': 5}
 {'width': 10}
-
-In the Rectangle class:
-
-The __init__ method initializes length and width.
-The __iter__ method allows the instance to be iterable, yielding the length and width in the specified format.
+Explanation:
+The dimensions dictionary is initialized with length and width.
+The __iter__ method simply returns an iterator over the dictionary’s items.
+When iterating, you get the dimension (key) and value pair directly, and then print them as required.
+This approach makes it easier by leveraging Python’s dict.items() to handle the iteration internally.
