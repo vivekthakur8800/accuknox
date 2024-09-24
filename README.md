@@ -5,6 +5,7 @@ Question 1: Are Django signals executed synchronously or asynchronously by defau
 Answer: By default, Django signals are executed synchronously. This means that when a signal is sent, the receivers are executed in the same thread and context as the signal sender.
 
 core/signals.py
+
 Code Snippet:
 ```
 from django.dispatch import Signal, receiver
@@ -39,6 +40,7 @@ Answer: Yes, Django signals run in the same thread as the caller by default.
 
 
 core/signal.py
+
 Code Snippet:
 ```
 from django.dispatch import Signal, receiver
@@ -67,6 +69,7 @@ Question 3: Do Django signals run in the same database transaction as the caller
 Answer: By default, Django signals do not run in the same database transaction as the caller. If a signal is emitted during a transaction and you want the receiver to execute within that transaction, you need to use the transaction.on_commit() function.
 
 core/models.py
+
 Code Snippet:
 ```
 from django.db import models
@@ -76,6 +79,7 @@ class MyModel(models.Model):
     name=models.CharField(max_length=100)
 ```
 core/signal.py
+
 Code Snippet:
 ```
 from django.db import models, transaction
@@ -113,6 +117,7 @@ Signal sent after save.
 In this case, if the signal is sent after saving an instance, the receiver runs, but if you were to raise an exception after instance.save(), the signal receiver would not be part of the transaction rollback. This indicates that signals do not run in the same transaction context by default.
 
 rectangle.py
+
 Simpler Rectangle Class Implementation
 ```
 class Rectangle:
@@ -133,6 +138,7 @@ Output:
 {'width': 10}
 ```
 Explanation:
+
 The dimensions dictionary is initialized with length and width.
 The __iter__ method simply returns an iterator over the dictionary’s items.
 When iterating, you get the dimension (key) and value pair directly, and then print them as required.
