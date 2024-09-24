@@ -6,7 +6,7 @@ Answer: By default, Django signals are executed synchronously. This means that w
 
 core/signals.py
 Code Snippet:
-
+```
 from django.dispatch import Signal, receiver
 import time
 
@@ -24,14 +24,14 @@ def my_receiver(*args, **kwargs):
 print("Sending signal...")
 my_signal.send(sender=None)
 print("Signal sent.")
-
+```
 Output:
-
+```
 Sending signal...
 Receiver started
 Signal sent.
 Receiver finished
-
+```
 In the above code, the output shows that the signal is sent and then waits for the receiver to complete its execution before moving on, indicating synchronous execution.
 
 Question 2: Do Django signals run in the same thread as the caller?
@@ -40,7 +40,7 @@ Answer: Yes, Django signals run in the same thread as the caller by default.
 
 core/signal.py
 Code Snippet:
-
+```
 from django.dispatch import Signal, receiver
 import threading
 
@@ -55,11 +55,12 @@ def my_receiver(*args, **kwargs):
 # Sending the signal
 print("Sending signal from thread:", threading.current_thread().name)
 my_signal.send(sender=None)
+```
 Output:
-
+```
 Sending signal from thread: MainThread
 Receiver is running in thread: MainThread
-
+```
 In this example, the receiver confirms that it is running in the same thread (MainThread) as the signal sender, demonstrating that signals run in the same thread by default.
 
 Question 3: Do Django signals run in the same database transaction as the caller?
@@ -67,16 +68,16 @@ Answer: By default, Django signals do not run in the same database transaction a
 
 core/models.py
 Code Snippet:
-
+```
 from django.db import models
 
 # Create your models here.
 class MyModel(models.Model):
     name=models.CharField(max_length=100)
-
+```
 core/signal.py
 Code Snippet:
-
+```
 from django.db import models, transaction
 from django.dispatch import Signal, receiver
 from django.db.utils import OperationalError
@@ -102,12 +103,13 @@ def create_instance():
         print("Transaction rolled back.")
 
 create_instance()
+```
 
 Output:
-
+```
 Receiver executed
 Signal sent after save.
-
+```
 In this case, if the signal is sent after saving an instance, the receiver runs, but if you were to raise an exception after instance.save(), the signal receiver would not be part of the transaction rollback. This indicates that signals do not run in the same transaction context by default.
 
 rectangle.py
@@ -126,11 +128,10 @@ for dimension, value in rectangle:
     print({dimension: value})
 ```
 Output:
-
-css
-Copy code
+```
 {'length': 5}
 {'width': 10}
+```
 Explanation:
 The dimensions dictionary is initialized with length and width.
 The __iter__ method simply returns an iterator over the dictionary’s items.
