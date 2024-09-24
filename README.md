@@ -2,6 +2,7 @@
 
 Django Signals
 Question 1: Are Django signals executed synchronously or asynchronously by default?
+
 Answer: By default, Django signals are executed synchronously. This means that when a signal is sent, the receivers are executed in the same thread and context as the signal sender.
 
 core/signals.py
@@ -36,6 +37,7 @@ Receiver finished
 In the above code, the output shows that the signal is sent and then waits for the receiver to complete its execution before moving on, indicating synchronous execution.
 
 Question 2: Do Django signals run in the same thread as the caller?
+
 Answer: Yes, Django signals run in the same thread as the caller by default.
 
 
@@ -66,6 +68,7 @@ Receiver is running in thread: MainThread
 In this example, the receiver confirms that it is running in the same thread (MainThread) as the signal sender, demonstrating that signals run in the same thread by default.
 
 Question 3: Do Django signals run in the same database transaction as the caller?
+
 Answer: By default, Django signals do not run in the same database transaction as the caller. If a signal is emitted during a transaction and you want the receiver to execute within that transaction, you need to use the transaction.on_commit() function.
 
 core/models.py
@@ -140,6 +143,9 @@ Output:
 Explanation:
 
 The dimensions dictionary is initialized with length and width.
+
 The __iter__ method simply returns an iterator over the dictionary’s items.
+
 When iterating, you get the dimension (key) and value pair directly, and then print them as required.
+
 This approach makes it easier by leveraging Python’s dict.items() to handle the iteration internally.
