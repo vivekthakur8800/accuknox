@@ -112,7 +112,7 @@ In this case, if the signal is sent after saving an instance, the receiver runs,
 
 rectangle.py
 Simpler Rectangle Class Implementation
-'''
+```
 class Rectangle:
     def __init__(self, length: int, width: int):
         self.dimensions = {'length': length, 'width': width}
@@ -124,7 +124,7 @@ class Rectangle:
 rectangle = Rectangle(5, 10)
 for dimension, value in rectangle:
     print({dimension: value})
-'''
+```
 Output:
 
 css
